@@ -9,7 +9,7 @@
   :root{
     --bg:#0d6e3e; --pitch:#0f8a4a; --pitch-line:#ffffff40;
     --red:#dc2626; --red-dark:#991b1b; --white:#ffffff;
-    --text:#1a1a1a; --gold:#fbbf24; --green:#22c55e;
+    --text:#1a1a1a; --gold:#fbbf24; --green:#22c55e; --orange:#f59e0b;
     --radius:24px;
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -28,17 +28,14 @@
   .header-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;color:#fff;text-shadow:0 2px 4px #00000030;}
   .home-link{background:#ffffff20;border:2px solid #ffffff40;border-radius:14px;color:#fff;padding:8px 14px;text-decoration:none;font-weight:800;font-size:0.85rem;font-family:'Nunito',sans-serif;}
 
-  /* DIVISION BADGE */
-  .division-badge{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px;margin:0 16px 12px;background:#ffffff18;border:2px solid #ffffff35;border-radius:14px;}
-  .division-badge .icon{font-size:1.3rem;}
-  .division-badge .label{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:0.95rem;letter-spacing:1px;text-shadow:0 1px 2px #00000030;}
-
-  /* PROMOTION BANNER */
-  .promo-banner{border-radius:18px;padding:16px 20px;margin-bottom:20px;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.1rem;}
-  .promo-banner.up{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;}
-  .promo-banner.down{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
-  .promo-banner.same{background:#f3f4f6;color:#6b7280;}
-  .promo-banner .sub{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;margin-top:4px;opacity:0.9;}
+  /* LEVEL BAR */
+  .level-bar{display:flex;gap:10px;margin:0 16px 12px;}
+  .level-badge{display:flex;align-items:center;gap:8px;padding:8px 14px;background:#ffffff18;border:2px solid #ffffff35;border-radius:14px;flex:1;}
+  .level-badge .icon{font-size:1.3rem;}
+  .level-badge .label-wrap{display:flex;flex-direction:column;line-height:1.25;}
+  .level-badge .label{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:0.95rem;letter-spacing:1px;text-shadow:0 1px 2px #00000030;}
+  .level-badge .streak{font-size:0.68rem;font-weight:800;color:#ffffffb0;}
+  .clock-badge{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;background:#ffffff18;border:2px solid #ffffff35;border-radius:14px;padding:8px 16px;font-size:1.05rem;letter-spacing:1px;display:flex;align-items:center;}
 
   /* PITCH PROGRESS */
   .pitch-wrap{padding:0 16px 16px;}
@@ -53,16 +50,22 @@
   .game-area{padding:10px 16px 24px;}
   .q-card{background:#fff;border-radius:var(--radius);padding:30px 24px;text-align:center;box-shadow:0 8px 24px #00000025;margin-bottom:20px;position:relative;overflow:hidden;}
   .q-label{font-family:'Baloo 2',cursive;font-weight:700;font-size:0.85rem;color:#9ca3af;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
-  .q-sum{font-family:'Baloo 2',cursive;font-weight:800;font-size:3rem;color:var(--text);letter-spacing:2px;line-height:1.2;}
+  .q-sum{font-family:'Baloo 2',cursive;font-weight:800;font-size:2.6rem;color:var(--text);letter-spacing:1px;line-height:1.25;}
   .q-sum .blank{display:inline-block;min-width:60px;border-bottom:5px solid var(--red);color:var(--red);}
+
+  /* FRACTIONS */
+  .frac{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;vertical-align:middle;margin:0 4px;font-size:0.78em;}
+  .frac .fnum{padding-bottom:3px;}
+  .frac .fden{border-top:3px solid currentColor;padding-top:3px;}
 
   /* ANSWER BUTTONS */
   .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
   .opt-btn{
     background:#fff; border:4px solid #e5e7eb; border-radius:20px;
-    padding:24px 10px; font-family:'Baloo 2',cursive; font-weight:800;
-    font-size:2.2rem; color:var(--text); cursor:pointer;
+    padding:22px 10px; font-family:'Baloo 2',cursive; font-weight:800;
+    font-size:1.9rem; color:var(--text); cursor:pointer;
     transition:all 0.15s; box-shadow:0 4px 10px #00000015;
+    min-height:78px; display:flex; align-items:center; justify-content:center;
   }
   .opt-btn:active{transform:scale(0.95);}
   .opt-btn.correct{background:var(--green);border-color:#16a34a;color:#fff;animation:pulse 0.4s;}
@@ -97,8 +100,29 @@
   .end-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.8rem;color:var(--red);margin-bottom:6px;}
   .end-score{font-family:'Baloo 2',cursive;font-weight:800;font-size:3.5rem;margin:14px 0;color:var(--text);}
   .end-score span{font-size:1.6rem;color:#9ca3af;}
-  .end-msg{color:#6b7280;font-size:1.05rem;margin-bottom:24px;line-height:1.6;font-weight:700;}
-  .end-stars-row{display:flex;justify-content:center;gap:10px;font-size:2.5rem;margin-bottom:24px;}
+  .end-stars-row{display:flex;justify-content:center;gap:10px;font-size:2.5rem;margin-bottom:18px;}
+
+  /* TIME ROW */
+  .time-row{display:flex;gap:10px;justify-content:center;margin-bottom:14px;}
+  .time-box{background:#f3f4f6;border-radius:14px;padding:10px 18px;min-width:90px;}
+  .time-num{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:var(--text);}
+  .time-label{font-size:0.7rem;font-weight:800;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+  /* CRITERIA */
+  .criteria-row{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+  .criteria-pill{border-radius:12px;padding:10px 14px;font-weight:800;font-size:0.92rem;text-align:left;}
+  .criteria-pill.pass{background:#dcfce7;color:#15803d;}
+  .criteria-pill.fail{background:#fee2e2;color:#b91c1c;}
+
+  .end-msg{color:#6b7280;font-size:1.05rem;margin-bottom:8px;line-height:1.6;font-weight:700;}
+
+  /* PROMOTION BANNER */
+  .promo-banner{border-radius:18px;padding:16px 20px;margin-bottom:20px;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.1rem;}
+  .promo-banner.up{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;}
+  .promo-banner.down{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
+  .promo-banner.same{background:#f3f4f6;color:#374151;}
+  .promo-banner .sub{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;margin-top:4px;opacity:0.9;}
+
   .play-again-btn{display:block;width:100%;padding:20px;background:var(--red);color:#fff;border:none;border-radius:18px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 12px #dc262640;}
   .play-again-btn:active{transform:scale(0.98);}
   .home-btn{display:block;width:100%;padding:18px;background:#f3f4f6;color:#6b7280;border:none;border-radius:18px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;text-decoration:none;}
@@ -116,9 +140,15 @@
   <a href="index.html" class="home-link">🏠 Home</a>
 </div>
 
-<div class="division-badge" id="division-badge">
-  <span class="icon">🏅</span>
-  <span class="label" id="division-label">Division 5</span>
+<div class="level-bar">
+  <div class="level-badge">
+    <span class="icon">🏅</span>
+    <div class="label-wrap">
+      <span class="label" id="level-label">Level 2A</span>
+      <span class="streak" id="streak-label">Streak 0/3</span>
+    </div>
+  </div>
+  <div class="clock-badge" id="clock-display">⏱ 00:00</div>
 </div>
 
 <div id="game-screen">
@@ -148,8 +178,17 @@
     <div class="end-title" id="end-title">Full Time!</div>
     <div class="end-score"><span id="final-score">0</span><span>/20</span></div>
     <div class="end-stars-row" id="end-stars-row"></div>
-    <div class="end-msg" id="end-msg"></div>
+
+    <div class="time-row">
+      <div class="time-box"><div class="time-num" id="end-time">00:00</div><div class="time-label">Your Time</div></div>
+      <div class="time-box"><div class="time-num" id="end-target">00:00</div><div class="time-label">Target</div></div>
+    </div>
+
+    <div class="criteria-row" id="criteria-row"></div>
+
     <div id="promo-banner-wrap"></div>
+    <div class="end-msg" id="end-msg"></div>
+
     <button class="play-again-btn" onclick="startGame()">⚽ Play Again</button>
     <a href="index.html" class="home-btn">🏠 Back to Home</a>
   </div>
@@ -165,7 +204,7 @@ let streak = 0;
 let answered = false;
 let questions = [];
 
-// ---- QUESTION GENERATION ----
+// ---- HELPERS ----
 function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
 function shuffle(arr) {
@@ -176,7 +215,37 @@ function shuffle(arr) {
   return arr;
 }
 
-// Generate distractor answers close to the correct one
+function gcd(a, b) {
+  a = Math.abs(a); b = Math.abs(b);
+  while (b) { [a, b] = [b, a % b]; }
+  return a || 1;
+}
+
+function simplifyFrac(n, d) {
+  const g = gcd(n, d);
+  return [n / g, d / g];
+}
+
+function fracStr(n, d) {
+  const [sn, sd] = simplifyFrac(n, d);
+  return sd === 1 ? `${sn}` : `${sn}/${sd}`;
+}
+
+function fracHTML(n, d) {
+  if (d === 1) return `${n}`;
+  return `<span class="frac"><span class="fnum">${n}</span><span class="fden">${d}</span></span>`;
+}
+
+function fmtNum(n) {
+  return n < 0 ? `−${Math.abs(n)}` : String(n);
+}
+
+function fmtTime(sec) {
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+// Generate numeric distractor answers close to the correct one
 function makeOptions(correct, min, max) {
   const opts = new Set([correct]);
   const deltas = [1, -1, 2, -2, 10, -10, 3, -3];
@@ -188,141 +257,320 @@ function makeOptions(correct, min, max) {
       opts.add(candidate);
     }
   }
-  // fallback: random fill
-  while (opts.size < 4) {
+  let guard = 0;
+  while (opts.size < 4 && guard < 50) {
+    guard++;
     const candidate = randInt(Math.max(min, correct - 12), Math.min(max, correct + 12));
     if (!opts.has(candidate)) opts.add(candidate);
   }
   return shuffle([...opts]);
 }
 
-// Question type generators
+function numOptions(correct, min, max) {
+  return makeOptions(correct, min, max).map(v => ({ value: v, html: fmtNum(v) }));
+}
+
+// Division-with-remainder options (Level D long division)
+function divisionOptions(divisor, correctQ, correctR) {
+  const correctVal = correctR === 0 ? `${correctQ}` : `${correctQ} r${correctR}`;
+  const opts = new Set([correctVal]);
+  const variants = [
+    [correctQ + 1, correctR], [correctQ - 1, correctR],
+    [correctQ, (correctR + 1) % divisor], [correctQ, (correctR - 1 + divisor) % divisor],
+    [correctQ + 1, (correctR - 1 + divisor) % divisor]
+  ];
+  for (const [q, r] of variants) {
+    if (q < 0) continue;
+    const val = r === 0 ? `${q}` : `${q} r${r}`;
+    if (!opts.has(val)) opts.add(val);
+    if (opts.size >= 4) break;
+  }
+  let guard = 0;
+  while (opts.size < 4 && guard < 50) {
+    guard++;
+    const q = Math.max(0, correctQ + randInt(-3, 3));
+    const r = randInt(0, divisor - 1);
+    const val = r === 0 ? `${q}` : `${q} r${r}`;
+    opts.add(val);
+  }
+  return shuffle([...opts]).map(v => ({ value: v, html: v }));
+}
+
+// Fraction options - shows simplified fractions
+function fracOptions(correctN, correctD) {
+  const [cn, cd] = simplifyFrac(correctN, correctD);
+  const correctStr = cd === 1 ? `${cn}` : `${cn}/${cd}`;
+  const opts = new Set([correctStr]);
+  const candidates = [];
+  for (const dn of [1, -1, 2, -2]) {
+    const n2 = cn + dn;
+    if (n2 > 0) {
+      const [sn, sd] = simplifyFrac(n2, cd);
+      candidates.push(sd === 1 ? `${sn}` : `${sn}/${sd}`);
+    }
+  }
+  for (const dd of [1, -1, 2]) {
+    const d2 = cd + dd;
+    if (d2 > 1) {
+      const [sn, sd] = simplifyFrac(cn, d2);
+      candidates.push(sd === 1 ? `${sn}` : `${sn}/${sd}`);
+    }
+  }
+  shuffle(candidates);
+  for (const c of candidates) { if (opts.size >= 4) break; opts.add(c); }
+  let guard = 0;
+  while (opts.size < 4 && guard < 50) {
+    guard++;
+    const n = randInt(1, 9), d = randInt(2, 12);
+    const [sn, sd] = simplifyFrac(n, d);
+    opts.add(sd === 1 ? `${sn}` : `${sn}/${sd}`);
+  }
+  return shuffle([...opts]).map(s => {
+    if (s.includes('/')) {
+      const [n, d] = s.split('/').map(Number);
+      return { value: s, html: fracHTML(n, d) };
+    }
+    return { value: s, html: s };
+  });
+}
+
+// ---- QUESTION GENERATORS ----
+
+// LEVEL 2A: addition to 20, number bonds
 function genAdditionTo20() {
-  // single digit + (single or double digit), sum <= 20, mirrors 2A200b style
-  const a = randInt(2, 10);
-  const b = randInt(2, 10);
-  const sum = a + b;
-  if (sum > 20) return genAdditionTo20();
-  return { text: `${a} + ${b} = `, answer: sum, min: 0, max: 24 };
+  const a = randInt(2, 10), b = randInt(2, 10);
+  return { display: `${a} + ${b} = `, answer: a + b, options: numOptions(a + b, 0, 24) };
 }
-
-function genAdditionCarrying() {
-  // bridging to Level A: sums that cross 10, e.g. 8+7, 9+6
-  const a = randInt(5, 9);
-  const b = randInt(5, 9);
-  return { text: `${a} + ${b} = `, answer: a + b, min: 8, max: 20 };
-}
-
-function genSubtraction() {
-  const a = randInt(8, 20);
-  const b = randInt(1, a);
-  return { text: `${a} - ${b} = `, answer: a - b, min: 0, max: 20 };
-}
-
-function genMissingNumber() {
-  // 7 + ? = 12
-  const total = randInt(8, 20);
-  const a = randInt(1, total - 1);
-  const b = total - a;
-  return { text: `${a} + <span class="blank">?</span> = ${total}`, answer: b, min: 0, max: 20, raw: true };
-}
-
-function genNumberBond() {
-  // ? + a = 10 or 20
-  const target = Math.random() < 0.5 ? 10 : 20;
-  const a = randInt(1, target - 1);
-  const b = target - a;
-  return { text: `${a} + <span class="blank">?</span> = ${target}`, answer: b, min: 0, max: target, raw: true };
-}
-
 function genBondTo10() {
-  const a = randInt(1, 9);
-  const b = 10 - a;
-  return { text: `${a} + <span class="blank">?</span> = 10`, answer: b, min: 0, max: 10, raw: true };
+  const a = randInt(1, 9), b = 10 - a;
+  return { display: `${a} + <span class="blank">?</span> = 10`, answer: b, options: numOptions(b, 0, 10), raw: true };
+}
+function genAdditionCarrying() {
+  const a = randInt(5, 9), b = randInt(5, 9);
+  return { display: `${a} + ${b} = `, answer: a + b, options: numOptions(a + b, 8, 20) };
 }
 
-function genBondTo20() {
-  const a = randInt(1, 19);
-  const b = 20 - a;
-  return { text: `${a} + <span class="blank">?</span> = 20`, answer: b, min: 0, max: 20, raw: true };
-}
-
+// LEVEL A: addition & subtraction to 100
 function genAddTo100() {
-  // two-digit addition, may or may not need carrying
   const a = randInt(10, 89);
   const b = randInt(1, 100 - a);
-  return { text: `${a} + ${b} = `, answer: a + b, min: 0, max: 100 };
+  return { display: `${a} + ${b} = `, answer: a + b, options: numOptions(a + b, 0, 110) };
 }
-
 function genSubTo100() {
   const a = randInt(20, 100);
   const b = randInt(1, a);
-  return { text: `${a} - ${b} = `, answer: a - b, min: 0, max: 100 };
+  return { display: `${a} − ${b} = `, answer: a - b, options: numOptions(a - b, 0, 100) };
 }
-
 function genMissingNumberTo100() {
   const total = randInt(20, 100);
   const a = randInt(1, total - 1);
   const b = total - a;
-  return { text: `${a} + <span class="blank">?</span> = ${total}`, answer: b, min: 0, max: 100, raw: true };
+  return { display: `${a} + <span class="blank">?</span> = ${total}`, answer: b, options: numOptions(b, 0, 100), raw: true };
 }
 
-function genMultiplication() {
-  const tables = [2, 5, 10];
-  const table = tables[randInt(0, tables.length - 1)];
-  const mult = randInt(1, 12);
-  return { text: `${table} &times; ${mult} = `, answer: table * mult, min: 0, max: 120 };
+// LEVEL B: 3-digit addition & subtraction with carrying/borrowing
+function genAdd3Digit() {
+  const a = randInt(100, 799);
+  const b = randInt(100, Math.min(899, 999 - a));
+  return { display: `${a} + ${b} = `, answer: a + b, options: numOptions(a + b, 100, 1100) };
+}
+function genSub3Digit() {
+  const a = randInt(200, 999);
+  const b = randInt(100, a - 1);
+  return { display: `${a} − ${b} = `, answer: a - b, options: numOptions(a - b, 0, 999) };
 }
 
-// ---- LEVEL / DIVISION SYSTEM ----
-const LEVELS = [
-  { // Level 1
-    division: "Division 5",
-    generators: [genAdditionTo20, genBondTo10, genAdditionCarrying],
-    weights:    [0.45,             0.35,        0.20]
-  },
-  { // Level 2
-    division: "Division 4",
-    generators: [genAdditionTo20, genAdditionCarrying, genBondTo20, genSubtraction],
-    weights:    [0.25,             0.30,                0.25,        0.20]
-  },
-  { // Level 3
-    division: "Division 3",
-    generators: [genAdditionCarrying, genSubtraction, genMissingNumber, genBondTo20],
-    weights:    [0.20,                0.30,            0.25,             0.25]
-  },
-  { // Level 4
-    division: "Division 2",
-    generators: [genAddTo100, genSubTo100, genAdditionCarrying, genMissingNumber, genSubtraction],
-    weights:    [0.30,        0.25,         0.15,                0.15,             0.15]
-  },
-  { // Level 5
-    division: "Division 1",
-    generators: [genAddTo100, genSubTo100, genMissingNumberTo100, genMultiplication],
-    weights:    [0.30,        0.30,         0.20,                  0.20]
-  },
-  { // Level 6
-    division: "Premier League",
-    generators: [genAddTo100, genSubTo100, genMultiplication, genMissingNumberTo100],
-    weights:    [0.20,        0.20,         0.35,               0.25]
+// LEVEL C: times tables, multi-digit multiplication, simple division
+function genTimesTable() {
+  const table = randInt(2, 12), mult = randInt(1, 12);
+  return { display: `${table} &times; ${mult} = `, answer: table * mult, options: numOptions(table * mult, 0, 150) };
+}
+function genMultiDigitMult() {
+  const a = randInt(11, 99), b = randInt(2, 9);
+  return { display: `${a} &times; ${b} = `, answer: a * b, options: numOptions(a * b, 0, 950) };
+}
+function genSimpleDivision() {
+  const d = randInt(2, 12), q = randInt(1, 12);
+  return { display: `${d * q} &divide; ${d} = `, answer: q, options: numOptions(q, 0, 12) };
+}
+
+// LEVEL D: long division, multi-digit multiplication, multi-step
+function genLongDivision() {
+  const divisor = randInt(3, 12);
+  const quotient = randInt(10, 40);
+  const remainder = Math.random() < 0.5 ? 0 : randInt(1, divisor - 1);
+  const dividend = divisor * quotient + remainder;
+  const answerVal = remainder === 0 ? `${quotient}` : `${quotient} r${remainder}`;
+  return { display: `${dividend} &divide; ${divisor} = `, answer: answerVal, options: divisionOptions(divisor, quotient, remainder) };
+}
+function genMultiplyBig() {
+  const a = randInt(100, 500), b = randInt(2, 9);
+  return { display: `${a} &times; ${b} = `, answer: a * b, options: numOptions(a * b, 0, 5000) };
+}
+function genMixedTwoStep() {
+  const a = randInt(2, 9), b = randInt(2, 9), c = randInt(2, 9);
+  let display, answer;
+  if (Math.random() < 0.5) {
+    display = `(${a} + ${b}) &times; ${c} = `; answer = (a + b) * c;
+  } else {
+    display = `${a} &times; ${b} − ${c} = `; answer = a * b - c;
   }
-];
+  return { display, answer, options: numOptions(answer, 0, 200) };
+}
 
+// LEVEL E: fractions
+function genFractionAddSub() {
+  const denoms = [2, 3, 4, 5, 6, 8, 10, 12];
+  const d = denoms[randInt(0, denoms.length - 1)];
+  let a = randInt(1, d - 1), b = randInt(1, d - 1);
+  let resN, opSym;
+  if (Math.random() < 0.6) {
+    resN = a + b; opSym = '+';
+  } else {
+    if (a < b) [a, b] = [b, a];
+    resN = a - b; opSym = '−';
+  }
+  const display = `${fracHTML(a, d)} ${opSym} ${fracHTML(b, d)} = `;
+  const [sn, sd] = simplifyFrac(resN, d);
+  const answerVal = sd === 1 ? `${sn}` : `${sn}/${sd}`;
+  return { display, answer: answerVal, options: fracOptions(resN, d) };
+}
+function genFractionMultiply() {
+  const bd = randInt(2, 6), an = randInt(1, bd - 1);
+  const dd = randInt(2, 6), cn = randInt(1, dd - 1);
+  const resN = an * cn, resD = bd * dd;
+  const display = `${fracHTML(an, bd)} &times; ${fracHTML(cn, dd)} = `;
+  const [sn, sd] = simplifyFrac(resN, resD);
+  const answerVal = sd === 1 ? `${sn}` : `${sn}/${sd}`;
+  return { display, answer: answerVal, options: fracOptions(resN, resD) };
+}
+function genFractionDivide() {
+  const bd = randInt(2, 6), an = randInt(1, bd - 1);
+  const dd = randInt(2, 6), cn = randInt(1, dd - 1);
+  const resN = an * dd, resD = bd * cn;
+  const display = `${fracHTML(an, bd)} &divide; ${fracHTML(cn, dd)} = `;
+  const [sn, sd] = simplifyFrac(resN, resD);
+  const answerVal = sd === 1 ? `${sn}` : `${sn}/${sd}`;
+  return { display, answer: answerVal, options: fracOptions(resN, resD) };
+}
+function genEquivalentFraction() {
+  let a, b;
+  do { b = randInt(2, 6); a = randInt(1, b - 1); } while (gcd(a, b) !== 1);
+  const k = randInt(2, 4);
+  const correctN = a * k, correctD = b * k;
+  const display = `Which fraction equals ${fracHTML(a, b)}?`;
+  const opts = new Set();
+  const correctKey = `${correctN}/${correctD}`;
+  opts.add(correctKey);
+  const tryAdd = (n, dnm) => {
+    if (n <= 0 || dnm <= 1) return;
+    const [sn, sd] = simplifyFrac(n, dnm);
+    if (sn === a && sd === b) return;
+    const key = `${n}/${dnm}`;
+    if (!opts.has(key)) opts.add(key);
+  };
+  tryAdd(correctN + 1, correctD);
+  tryAdd(correctN - 1, correctD);
+  tryAdd(a, correctD);
+  tryAdd(correctN, correctD + 1);
+  let guard = 0;
+  while (opts.size < 4 && guard < 50) {
+    guard++;
+    tryAdd(randInt(1, correctD - 1), correctD + randInt(0, 3));
+  }
+  const arr = shuffle([...opts]).slice(0, 4);
+  if (!arr.includes(correctKey)) arr[0] = correctKey;
+  const options = shuffle(arr).map(s => {
+    const [n, dnm] = s.split('/').map(Number);
+    return { value: s, html: fracHTML(n, dnm) };
+  });
+  return { display, answer: correctKey, options, raw: true };
+}
+
+// LEVEL F: decimals, negatives, BIDMAS
+function genDecimalAddSub() {
+  const dp = Math.random() < 0.5 ? 1 : 2;
+  const scale = Math.pow(10, dp);
+  const maxInt = dp === 1 ? 99 : 999;
+  let aInt = randInt(10, maxInt), bInt = randInt(10, maxInt);
+  let resInt, opSym;
+  if (Math.random() < 0.6) {
+    resInt = aInt + bInt; opSym = '+';
+  } else {
+    if (aInt < bInt) [aInt, bInt] = [bInt, aInt];
+    resInt = aInt - bInt; opSym = '−';
+  }
+  const a = (aInt / scale).toFixed(dp), b = (bInt / scale).toFixed(dp), res = (resInt / scale).toFixed(dp);
+  const display = `${a} ${opSym} ${b} = `;
+  const rawOpts = makeOptions(resInt, 0, maxInt * 2);
+  const options = rawOpts.map(v => {
+    const s = (v / scale).toFixed(dp);
+    return { value: s, html: s };
+  });
+  return { display, answer: res, options };
+}
+function genNegativeNumbers() {
+  const pattern = randInt(0, 3);
+  const a = randInt(1, 12), b = randInt(1, 12);
+  let display, answer, min = -30, max = 30;
+  if (pattern === 0) {
+    display = `−${a} + ${b} = `; answer = b - a;
+  } else if (pattern === 1) {
+    const x = randInt(1, 15), y = randInt(1, 15);
+    display = `${x} − ${y} = `; answer = x - y;
+  } else if (pattern === 2) {
+    display = `(−${a}) &times; ${b} = `; answer = -a * b; min = -150; max = 150;
+  } else {
+    display = `(−${a}) &times; (−${b}) = `; answer = a * b; min = 0; max = 150;
+  }
+  return { display, answer, options: numOptions(answer, min, max) };
+}
+function genBIDMAS() {
+  const a = randInt(2, 9), b = randInt(2, 9), c = randInt(2, 9);
+  let display, answer, mistake;
+  if (Math.random() < 0.5) {
+    display = `${a} + ${b} &times; ${c} = `; answer = a + b * c; mistake = (a + b) * c;
+  } else {
+    display = `(${a} + ${b}) &times; ${c} = `; answer = (a + b) * c; mistake = a + b * c;
+  }
+  const opts = new Set([answer]);
+  if (mistake !== answer) opts.add(mistake);
+  const extra = makeOptions(answer, 0, 250);
+  for (const e of extra) { if (opts.size >= 4) break; opts.add(e); }
+  let guard = 0;
+  while (opts.size < 4 && guard < 30) { guard++; opts.add(Math.max(0, answer + randInt(-15, 15))); }
+  return { display, answer, options: shuffle([...opts]).map(v => ({ value: v, html: fmtNum(v) })) };
+}
+
+// ---- LEVEL SYSTEM (Kumon-style) ----
+const LEVELS = [
+  { name: "2A", desc: "Addition to 20 & number bonds", generators: [genAdditionTo20, genBondTo10, genAdditionCarrying], weights: [0.45, 0.35, 0.20], targetSeconds: 180 },
+  { name: "A", desc: "Addition & subtraction to 100", generators: [genAddTo100, genSubTo100, genMissingNumberTo100], weights: [0.45, 0.45, 0.10], targetSeconds: 240 },
+  { name: "B", desc: "3-digit addition & subtraction", generators: [genAdd3Digit, genSub3Digit], weights: [0.5, 0.5], targetSeconds: 300 },
+  { name: "C", desc: "Times tables & division facts", generators: [genTimesTable, genMultiDigitMult, genSimpleDivision], weights: [0.4, 0.3, 0.3], targetSeconds: 300 },
+  { name: "D", desc: "Long division & multi-step", generators: [genLongDivision, genMultiplyBig, genMixedTwoStep], weights: [0.35, 0.30, 0.35], targetSeconds: 390 },
+  { name: "E", desc: "Fractions", generators: [genFractionAddSub, genFractionMultiply, genFractionDivide, genEquivalentFraction], weights: [0.35, 0.25, 0.20, 0.20], targetSeconds: 420 },
+  { name: "F", desc: "Decimals, negatives & BIDMAS", generators: [genDecimalAddSub, genNegativeNumbers, genBIDMAS], weights: [0.35, 0.35, 0.30], targetSeconds: 420 }
+];
 const MAX_LEVEL = LEVELS.length;
-const PROMO_SCORE = 18; // score needed to go up a division
-const RELEGATION_SCORE = 9; // score below which you drop a division
+const PROMO_SCORE = 18;       // 90% accuracy needed
+const POOR_SCORE = 9;         // below this counts as a "poor" session
+const PROMO_STREAK_NEEDED = 3; // consecutive qualifying sessions needed to level up
 
 function getLevel() {
   const stored = parseInt(localStorage.getItem('barney_maths_level'));
   if (!stored || stored < 1 || stored > MAX_LEVEL) return 1;
   return stored;
 }
-
 function setLevel(level) {
   const clamped = Math.max(1, Math.min(MAX_LEVEL, level));
   localStorage.setItem('barney_maths_level', clamped);
   return clamped;
 }
+function getStreak() { return parseInt(localStorage.getItem('barney_maths_streak')) || 0; }
+function setStreak(v) { localStorage.setItem('barney_maths_streak', Math.max(0, v)); }
+function getPoor() { return parseInt(localStorage.getItem('barney_maths_poor')) || 0; }
+function setPoor(v) { localStorage.setItem('barney_maths_poor', Math.max(0, v)); }
 
 let currentLevel = getLevel();
 
@@ -340,26 +588,65 @@ function pickGenerator() {
 function buildQuestionSet() {
   const qs = [];
   for (let i = 0; i < TOTAL_QUESTIONS; i++) {
-    const gen = pickGenerator();
-    const q = gen();
-    q.options = makeOptions(q.answer, q.min, q.max);
-    qs.push(q);
+    qs.push(pickGenerator()());
   }
   return qs;
+}
+
+// ---- TIMER ----
+let timerInterval = null;
+let startTime = null;
+let elapsedSeconds = 0;
+
+function startTimer() {
+  startTime = Date.now();
+  elapsedSeconds = 0;
+  updateClockDisplay();
+  timerInterval = setInterval(() => {
+    elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+    updateClockDisplay();
+  }, 1000);
+}
+function stopTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+  elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+}
+function updateClockDisplay() {
+  document.getElementById('clock-display').textContent = `⏱ ${fmtTime(elapsedSeconds)}`;
+}
+
+// ---- STATS ----
+function getStats() {
+  try {
+    return JSON.parse(localStorage.getItem('barney_maths_stats')) || { best: null, played: 0, perfect: 0 };
+  } catch (e) {
+    return { best: null, played: 0, perfect: 0 };
+  }
+}
+function updateStats(score) {
+  const stats = getStats();
+  stats.played = (stats.played || 0) + 1;
+  if (stats.best === null || score > stats.best) stats.best = score;
+  if (score === TOTAL_QUESTIONS) stats.perfect = (stats.perfect || 0) + 1;
+  localStorage.setItem('barney_maths_stats', JSON.stringify(stats));
 }
 
 // ---- UI ----
 function startGame() {
   currentQ = 0;
   score = 0;
-  streak = 0;
+  answered = false;
   currentLevel = getLevel();
-  document.getElementById('division-label').textContent = LEVELS[currentLevel - 1].division;
+  const config = LEVELS[currentLevel - 1];
+  document.getElementById('level-label').textContent = `Level ${config.name}`;
+  document.getElementById('streak-label').textContent = `Streak ${getStreak()}/${PROMO_STREAK_NEEDED}`;
   questions = buildQuestionSet();
   document.getElementById('game-screen').style.display = 'block';
   document.getElementById('end-screen').style.display = 'none';
   document.getElementById('promo-banner-wrap').innerHTML = '';
   renderStars();
+  startTimer();
   showQuestion();
 }
 
@@ -378,7 +665,8 @@ function renderStars() {
 function showQuestion() {
   answered = false;
   const q = questions[currentQ];
-  document.getElementById('q-sum').innerHTML = q.raw ? q.text : `${q.text}<span class="blank">?</span>`;
+  const blank = q.raw ? '' : '<span class="blank">?</span>';
+  document.getElementById('q-sum').innerHTML = q.display + blank;
   document.getElementById('pitch-label').textContent = `Question ${currentQ + 1} of ${TOTAL_QUESTIONS}`;
 
   const pct = (currentQ / TOTAL_QUESTIONS) * 100;
@@ -390,29 +678,28 @@ function showQuestion() {
   q.options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'opt-btn';
-    btn.textContent = opt;
-    btn.onclick = () => selectAnswer(opt, q.answer, btn);
+    btn.innerHTML = opt.html;
+    btn.dataset.value = opt.value;
+    btn.onclick = () => selectAnswer(opt.value, q.answer, btn);
     grid.appendChild(btn);
   });
 }
 
-function selectAnswer(chosen, correct, btn) {
+function selectAnswer(chosenVal, correctVal, btn) {
   if (answered) return;
   answered = true;
   const allBtns = document.querySelectorAll('.opt-btn');
   allBtns.forEach(b => b.disabled = true);
 
-  const isCorrect = chosen === correct;
+  const isCorrect = String(chosenVal) === String(correctVal);
   if (isCorrect) {
     score++;
-    streak++;
     btn.classList.add('correct');
-    showFeedback(streak >= 3 ? '🔥' : '⚽');
+    showFeedback('⚽');
   } else {
-    streak = 0;
     btn.classList.add('wrong');
     allBtns.forEach(b => {
-      if (parseInt(b.textContent) === correct) b.classList.add('correct');
+      if (String(b.dataset.value) === String(correctVal)) b.classList.add('correct');
     });
     showFeedback('🧤');
   }
@@ -437,7 +724,7 @@ function showFeedback(emoji) {
   const fbEmoji = document.getElementById('feedback-emoji');
   fbEmoji.textContent = emoji;
   fbEmoji.style.animation = 'none';
-  void fbEmoji.offsetWidth; // restart animation
+  void fbEmoji.offsetWidth;
   fbEmoji.style.animation = '';
   fb.classList.add('show');
   setTimeout(() => fb.classList.remove('show'), 700);
@@ -457,23 +744,8 @@ function showConfetti() {
   }
 }
 
-function getStats() {
-  try {
-    return JSON.parse(localStorage.getItem('barney_maths_stats')) || { best: null, played: 0, perfect: 0 };
-  } catch (e) {
-    return { best: null, played: 0, perfect: 0 };
-  }
-}
-
-function updateStats(score) {
-  const stats = getStats();
-  stats.played = (stats.played || 0) + 1;
-  if (stats.best === null || score > stats.best) stats.best = score;
-  if (score === TOTAL_QUESTIONS) stats.perfect = (stats.perfect || 0) + 1;
-  localStorage.setItem('barney_maths_stats', JSON.stringify(stats));
-}
-
 function showEnd() {
+  stopTimer();
   document.getElementById('game-screen').style.display = 'none';
   document.getElementById('end-screen').style.display = 'block';
   document.getElementById('final-score').textContent = score;
@@ -512,26 +784,62 @@ function showEnd() {
     starsRow.appendChild(s);
   }
 
-  // Update stats
+  // Time display
+  const config = LEVELS[currentLevel - 1];
+  document.getElementById('end-time').textContent = fmtTime(elapsedSeconds);
+  document.getElementById('end-target').textContent = fmtTime(config.targetSeconds);
+
+  const passAcc = score >= PROMO_SCORE;
+  const passTime = elapsedSeconds <= config.targetSeconds;
+
+  document.getElementById('criteria-row').innerHTML = `
+    <div class="criteria-pill ${passAcc ? 'pass' : 'fail'}">${passAcc ? '✅' : '❌'} Accuracy — need ${PROMO_SCORE}+/${TOTAL_QUESTIONS} correct</div>
+    <div class="criteria-pill ${passTime ? 'pass' : 'fail'}">${passTime ? '✅' : '❌'} Speed — need under ${fmtTime(config.targetSeconds)}</div>
+  `;
+
   updateStats(score);
 
-  // Promotion / relegation logic
-  const oldLevel = currentLevel;
-  let newLevel = oldLevel;
+  // ---- Promotion / relegation logic ----
+  let sStreak = getStreak();
+  let sPoor = getPoor();
   let banner = '';
-  if (score >= PROMO_SCORE && oldLevel < MAX_LEVEL) {
-    newLevel = setLevel(oldLevel + 1);
-    const newDiv = LEVELS[newLevel - 1].division;
-    banner = `<div class="promo-banner up">⬆️ PROMOTED! ⬆️<div class="sub">You're moving up to ${newDiv}!</div></div>`;
-  } else if (score <= RELEGATION_SCORE && oldLevel > 1) {
-    newLevel = setLevel(oldLevel - 1);
-    const newDiv = LEVELS[newLevel - 1].division;
-    banner = `<div class="promo-banner down">⚠️ Time for more training ⚠️<div class="sub">Dropping back to ${newDiv} to build confidence</div></div>`;
-  } else if (oldLevel === MAX_LEVEL && score >= PROMO_SCORE) {
-    banner = `<div class="promo-banner up">🌟 PREMIER LEAGUE CHAMPION! 🌟<div class="sub">You're at the very top, Barney!</div></div>`;
+
+  if (passAcc && passTime) {
+    sStreak++;
+    sPoor = 0;
+    if (sStreak >= PROMO_STREAK_NEEDED) {
+      if (currentLevel < MAX_LEVEL) {
+        const newLevel = setLevel(currentLevel + 1);
+        banner = `<div class="promo-banner up">⬆️ LEVEL UP! ⬆️<div class="sub">Moving up to Level ${LEVELS[newLevel - 1].name} — ${LEVELS[newLevel - 1].desc}</div></div>`;
+      } else {
+        banner = `<div class="promo-banner up">🌟 LEVEL F MASTERED! 🌟<div class="sub">Incredible work, Barney — you've completed the programme!</div></div>`;
+      }
+      sStreak = 0;
+    } else {
+      const nextName = currentLevel < MAX_LEVEL ? LEVELS[currentLevel].name : config.name;
+      banner = `<div class="promo-banner same">✅ Great session!<div class="sub">${sStreak}/${PROMO_STREAK_NEEDED} sessions toward Level ${nextName}</div></div>`;
+    }
+  } else if (passAcc && !passTime) {
+    sPoor = 0;
+    banner = `<div class="promo-banner same">🏃 Great accuracy — now let's get faster!<div class="sub">Streak stays at ${sStreak}/${PROMO_STREAK_NEEDED}. Try to beat ${fmtTime(config.targetSeconds)} next time.</div></div>`;
   } else {
-    setLevel(oldLevel); // no change, but ensure stored
+    sStreak = 0;
+    if (score <= POOR_SCORE) {
+      sPoor++;
+      if (sPoor >= 2 && currentLevel > 1) {
+        const newLevel = setLevel(currentLevel - 1);
+        banner = `<div class="promo-banner down">Let's build confidence<div class="sub">Dropping back to Level ${LEVELS[newLevel - 1].name} for some review</div></div>`;
+        sPoor = 0;
+      } else {
+        banner = `<div class="promo-banner down">Keep practising!<div class="sub">You'll get it next time — let's go again</div></div>`;
+      }
+    } else {
+      banner = `<div class="promo-banner same">So close!<div class="sub">Get ${PROMO_SCORE}+/${TOTAL_QUESTIONS} to build your streak</div></div>`;
+    }
   }
+
+  setStreak(sStreak);
+  setPoor(sPoor);
   document.getElementById('promo-banner-wrap').innerHTML = banner;
 }
 

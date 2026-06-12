@@ -35,6 +35,8 @@
   .division-card{margin:16px;background:#ffffff18;border:2px solid #ffffff35;border-radius:18px;padding:16px 20px;text-align:center;}
   .division-card .tag{font-family:'Nunito',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#ffffffaa;margin-bottom:4px;}
   .division-card .name{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:#fff;text-shadow:0 2px 4px #00000030;}
+  .division-card .desc{font-size:0.85rem;color:#ffffffcc;font-weight:700;margin-top:4px;}
+  .division-card .streak-text{font-size:0.78rem;color:#ffffffaa;font-weight:700;margin-top:10px;}
   .division-card .ladder{display:flex;justify-content:center;gap:6px;margin-top:12px;}
   .ladder-dot{width:14px;height:14px;border-radius:50%;background:#ffffff25;border:2px solid #ffffff40;}
   .ladder-dot.filled{background:var(--gold);border-color:#fbbf24;}
@@ -79,9 +81,11 @@
 </div>
 
 <div class="division-card">
-  <div class="tag">Current Division</div>
-  <div class="name" id="division-name">Division 5</div>
+  <div class="tag">Current Level</div>
+  <div class="name" id="division-name">Level 2A</div>
+  <div class="desc" id="division-desc">Addition to 20 & number bonds</div>
   <div class="ladder" id="ladder"></div>
+  <div class="streak-text" id="streak-text">0/3 sessions toward Level A</div>
 </div>
 
 <div class="play-section">
@@ -118,14 +122,22 @@
 
 <script>
 const LEVELS = [
-  "Division 5", "Division 4", "Division 3", "Division 2", "Division 1", "Premier League"
+  { name: "2A", desc: "Addition to 20 & number bonds" },
+  { name: "A", desc: "Addition & subtraction to 100" },
+  { name: "B", desc: "3-digit addition & subtraction" },
+  { name: "C", desc: "Times tables & division facts" },
+  { name: "D", desc: "Long division & multi-step" },
+  { name: "E", desc: "Fractions" },
+  { name: "F", desc: "Decimals, negatives & BIDMAS" }
 ];
+const PROMO_STREAK_NEEDED = 3;
 
 function getLevel() {
   const stored = parseInt(localStorage.getItem('barney_maths_level'));
   if (!stored || stored < 1 || stored > LEVELS.length) return 1;
   return stored;
 }
+function getStreak() { return parseInt(localStorage.getItem('barney_maths_streak')) || 0; }
 
 function getStats() {
   try {
@@ -136,7 +148,13 @@ function getStats() {
 }
 
 const level = getLevel();
-document.getElementById('division-name').textContent = LEVELS[level - 1];
+const streak = getStreak();
+document.getElementById('division-name').textContent = `Level ${LEVELS[level - 1].name}`;
+document.getElementById('division-desc').textContent = LEVELS[level - 1].desc;
+document.getElementById('streak-text').textContent =
+  level < LEVELS.length
+    ? `${streak}/${PROMO_STREAK_NEEDED} sessions toward Level ${LEVELS[level].name}`
+    : `${streak}/${PROMO_STREAK_NEEDED} — Level F mastery in progress`;
 
 const ladder = document.getElementById('ladder');
 ladder.innerHTML = '';

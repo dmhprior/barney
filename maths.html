@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barney's Match Day ⚽</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800;900&display=swap');
+  :root{
+    --bg:#0d6e3e; --pitch:#0f8a4a; --pitch-line:#ffffff40;
+    --red:#dc2626; --red-dark:#991b1b; --white:#ffffff;
+    --text:#1a1a1a; --gold:#fbbf24; --green:#22c55e;
+    --radius:24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:linear-gradient(180deg,var(--pitch) 0%,var(--bg) 100%);
+    min-height:100vh;color:var(--text);
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 80px, #ffffff08 80px 160px);
+    overscroll-behavior:none;
+  }
+
+  /* HEADER */
+  .header{padding:18px 16px 14px;display:flex;align-items:center;justify-content:space-between;}
+  .header-left{display:flex;align-items:center;gap:10px;}
+  .header-left .ball{font-size:1.8rem;}
+  .header-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;color:#fff;text-shadow:0 2px 4px #00000030;}
+  .home-link{background:#ffffff20;border:2px solid #ffffff40;border-radius:14px;color:#fff;padding:8px 14px;text-decoration:none;font-weight:800;font-size:0.85rem;font-family:'Nunito',sans-serif;}
+
+  /* DIVISION BADGE */
+  .division-badge{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px;margin:0 16px 12px;background:#ffffff18;border:2px solid #ffffff35;border-radius:14px;}
+  .division-badge .icon{font-size:1.3rem;}
+  .division-badge .label{font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:0.95rem;letter-spacing:1px;text-shadow:0 1px 2px #00000030;}
+
+  /* PROMOTION BANNER */
+  .promo-banner{border-radius:18px;padding:16px 20px;margin-bottom:20px;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.1rem;}
+  .promo-banner.up{background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;}
+  .promo-banner.down{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;}
+  .promo-banner.same{background:#f3f4f6;color:#6b7280;}
+  .promo-banner .sub{font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;margin-top:4px;opacity:0.9;}
+
+  /* PITCH PROGRESS */
+  .pitch-wrap{padding:0 16px 16px;}
+  .pitch{position:relative;background:var(--pitch);border:3px solid #ffffff60;border-radius:16px;height:54px;overflow:hidden;display:flex;align-items:center;}
+  .pitch-stripes{position:absolute;inset:0;background:repeating-linear-gradient(90deg, #ffffff00 0 40px, #ffffff0d 40px 80px);}
+  .pitch-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#16a34a,#22c55e);width:0%;transition:width 0.6s cubic-bezier(.4,1.6,.6,1);border-right:3px solid #ffffff80;}
+  .pitch-ball{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:1.8rem;left:0%;transition:left 0.6s cubic-bezier(.4,1.6,.6,1);filter:drop-shadow(0 2px 4px #00000050);}
+  .pitch-goal{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:1.6rem;}
+  .pitch-label{position:relative;z-index:2;width:100%;text-align:center;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:0.95rem;text-shadow:0 2px 3px #00000040;}
+
+  /* QUESTION CARD */
+  .game-area{padding:10px 16px 24px;}
+  .q-card{background:#fff;border-radius:var(--radius);padding:30px 24px;text-align:center;box-shadow:0 8px 24px #00000025;margin-bottom:20px;position:relative;overflow:hidden;}
+  .q-label{font-family:'Baloo 2',cursive;font-weight:700;font-size:0.85rem;color:#9ca3af;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .q-sum{font-family:'Baloo 2',cursive;font-weight:800;font-size:3rem;color:var(--text);letter-spacing:2px;line-height:1.2;}
+  .q-sum .blank{display:inline-block;min-width:60px;border-bottom:5px solid var(--red);color:var(--red);}
+
+  /* ANSWER BUTTONS */
+  .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .opt-btn{
+    background:#fff; border:4px solid #e5e7eb; border-radius:20px;
+    padding:24px 10px; font-family:'Baloo 2',cursive; font-weight:800;
+    font-size:2.2rem; color:var(--text); cursor:pointer;
+    transition:all 0.15s; box-shadow:0 4px 10px #00000015;
+  }
+  .opt-btn:active{transform:scale(0.95);}
+  .opt-btn.correct{background:var(--green);border-color:#16a34a;color:#fff;animation:pulse 0.4s;}
+  .opt-btn.wrong{background:var(--red);border-color:var(--red-dark);color:#fff;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn:disabled:not(.correct):not(.wrong){opacity:0.4;}
+  @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+
+  /* FEEDBACK OVERLAY */
+  .feedback{
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    pointer-events:none; z-index:50;
+  }
+  .feedback.show{display:flex;}
+  .feedback-emoji{font-size:7rem; animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 6px 12px #00000040);}
+  @keyframes popIn{0%{transform:scale(0) rotate(-20deg);opacity:0;}60%{transform:scale(1.3) rotate(8deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+
+  /* CONFETTI */
+  .confetti{position:fixed;top:-20px;width:10px;height:10px;border-radius:2px;animation:fall linear forwards;z-index:49;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0.3;}}
+
+  /* SCORE STARS */
+  .stars-row{display:flex;justify-content:center;gap:6px;padding-bottom:6px;}
+  .star{font-size:1.3rem;opacity:0.25;transition:all 0.3s;}
+  .star.lit{opacity:1;animation:starPop 0.4s;}
+  @keyframes starPop{0%{transform:scale(0.3);}60%{transform:scale(1.3);}100%{transform:scale(1);}}
+
+  /* END SCREEN */
+  #end-screen{display:none;padding:30px 16px;text-align:center;}
+  .end-card{background:#fff;border-radius:var(--radius);padding:32px 24px;box-shadow:0 8px 24px #00000025;}
+  .end-trophy{font-size:5rem;margin-bottom:8px;}
+  .end-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.8rem;color:var(--red);margin-bottom:6px;}
+  .end-score{font-family:'Baloo 2',cursive;font-weight:800;font-size:3.5rem;margin:14px 0;color:var(--text);}
+  .end-score span{font-size:1.6rem;color:#9ca3af;}
+  .end-msg{color:#6b7280;font-size:1.05rem;margin-bottom:24px;line-height:1.6;font-weight:700;}
+  .end-stars-row{display:flex;justify-content:center;gap:10px;font-size:2.5rem;margin-bottom:24px;}
+  .play-again-btn{display:block;width:100%;padding:20px;background:var(--red);color:#fff;border:none;border-radius:18px;font-family:'Baloo 2',cursive;font-weight:800;font-size:1.3rem;cursor:pointer;margin-bottom:12px;box-shadow:0 4px 12px #dc262640;}
+  .play-again-btn:active{transform:scale(0.98);}
+  .home-btn{display:block;width:100%;padding:18px;background:#f3f4f6;color:#6b7280;border:none;border-radius:18px;font-family:'Nunito',sans-serif;font-weight:800;font-size:1rem;cursor:pointer;text-decoration:none;}
+
+  #game-screen{display:block;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <span class="ball">⚽</span>
+    <span class="header-title">Match Day!</span>
+  </div>
+  <a href="index.html" class="home-link">🏠 Home</a>
+</div>
+
+<div class="division-badge" id="division-badge">
+  <span class="icon">🏅</span>
+  <span class="label" id="division-label">Division 5</span>
+</div>
+
+<div id="game-screen">
+  <div class="pitch-wrap">
+    <div class="pitch">
+      <div class="pitch-stripes"></div>
+      <div class="pitch-fill" id="pitch-fill"></div>
+      <div class="pitch-ball" id="pitch-ball">⚽</div>
+      <div class="pitch-goal">🥅</div>
+      <div class="pitch-label" id="pitch-label">Question 1 of 20</div>
+    </div>
+  </div>
+
+  <div class="game-area">
+    <div class="stars-row" id="stars-row"></div>
+    <div class="q-card">
+      <div class="q-label">Work it out!</div>
+      <div class="q-sum" id="q-sum">3 + 8 = <span class="blank">?</span></div>
+    </div>
+    <div class="options-grid" id="options-grid"></div>
+  </div>
+</div>
+
+<div id="end-screen">
+  <div class="end-card">
+    <div class="end-trophy" id="end-trophy">🏆</div>
+    <div class="end-title" id="end-title">Full Time!</div>
+    <div class="end-score"><span id="final-score">0</span><span>/20</span></div>
+    <div class="end-stars-row" id="end-stars-row"></div>
+    <div class="end-msg" id="end-msg"></div>
+    <div id="promo-banner-wrap"></div>
+    <button class="play-again-btn" onclick="startGame()">⚽ Play Again</button>
+    <a href="index.html" class="home-btn">🏠 Back to Home</a>
+  </div>
+</div>
+
+<div class="feedback" id="feedback"><div class="feedback-emoji" id="feedback-emoji"></div></div>
+
+<script>
+const TOTAL_QUESTIONS = 20;
+let currentQ = 0;
+let score = 0;
+let streak = 0;
+let answered = false;
+let questions = [];
+
+// ---- QUESTION GENERATION ----
+function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Generate distractor answers close to the correct one
+function makeOptions(correct, min, max) {
+  const opts = new Set([correct]);
+  const deltas = [1, -1, 2, -2, 10, -10, 3, -3];
+  shuffle(deltas);
+  for (const d of deltas) {
+    if (opts.size >= 4) break;
+    const candidate = correct + d;
+    if (candidate >= min && candidate <= max && !opts.has(candidate)) {
+      opts.add(candidate);
+    }
+  }
+  // fallback: random fill
+  while (opts.size < 4) {
+    const candidate = randInt(Math.max(min, correct - 12), Math.min(max, correct + 12));
+    if (!opts.has(candidate)) opts.add(candidate);
+  }
+  return shuffle([...opts]);
+}
+
+// Question type generators
+function genAdditionTo20() {
+  // single digit + (single or double digit), sum <= 20, mirrors 2A200b style
+  const a = randInt(2, 10);
+  const b = randInt(2, 10);
+  const sum = a + b;
+  if (sum > 20) return genAdditionTo20();
+  return { text: `${a} + ${b} = `, answer: sum, min: 0, max: 24 };
+}
+
+function genAdditionCarrying() {
+  // bridging to Level A: sums that cross 10, e.g. 8+7, 9+6
+  const a = randInt(5, 9);
+  const b = randInt(5, 9);
+  return { text: `${a} + ${b} = `, answer: a + b, min: 8, max: 20 };
+}
+
+function genSubtraction() {
+  const a = randInt(8, 20);
+  const b = randInt(1, a);
+  return { text: `${a} - ${b} = `, answer: a - b, min: 0, max: 20 };
+}
+
+function genMissingNumber() {
+  // 7 + ? = 12
+  const total = randInt(8, 20);
+  const a = randInt(1, total - 1);
+  const b = total - a;
+  return { text: `${a} + <span class="blank">?</span> = ${total}`, answer: b, min: 0, max: 20, raw: true };
+}
+
+function genNumberBond() {
+  // ? + a = 10 or 20
+  const target = Math.random() < 0.5 ? 10 : 20;
+  const a = randInt(1, target - 1);
+  const b = target - a;
+  return { text: `${a} + <span class="blank">?</span> = ${target}`, answer: b, min: 0, max: target, raw: true };
+}
+
+function genBondTo10() {
+  const a = randInt(1, 9);
+  const b = 10 - a;
+  return { text: `${a} + <span class="blank">?</span> = 10`, answer: b, min: 0, max: 10, raw: true };
+}
+
+function genBondTo20() {
+  const a = randInt(1, 19);
+  const b = 20 - a;
+  return { text: `${a} + <span class="blank">?</span> = 20`, answer: b, min: 0, max: 20, raw: true };
+}
+
+function genAddTo100() {
+  // two-digit addition, may or may not need carrying
+  const a = randInt(10, 89);
+  const b = randInt(1, 100 - a);
+  return { text: `${a} + ${b} = `, answer: a + b, min: 0, max: 100 };
+}
+
+function genSubTo100() {
+  const a = randInt(20, 100);
+  const b = randInt(1, a);
+  return { text: `${a} - ${b} = `, answer: a - b, min: 0, max: 100 };
+}
+
+function genMissingNumberTo100() {
+  const total = randInt(20, 100);
+  const a = randInt(1, total - 1);
+  const b = total - a;
+  return { text: `${a} + <span class="blank">?</span> = ${total}`, answer: b, min: 0, max: 100, raw: true };
+}
+
+function genMultiplication() {
+  const tables = [2, 5, 10];
+  const table = tables[randInt(0, tables.length - 1)];
+  const mult = randInt(1, 12);
+  return { text: `${table} &times; ${mult} = `, answer: table * mult, min: 0, max: 120 };
+}
+
+// ---- LEVEL / DIVISION SYSTEM ----
+const LEVELS = [
+  { // Level 1
+    division: "Division 5",
+    generators: [genAdditionTo20, genBondTo10, genAdditionCarrying],
+    weights:    [0.45,             0.35,        0.20]
+  },
+  { // Level 2
+    division: "Division 4",
+    generators: [genAdditionTo20, genAdditionCarrying, genBondTo20, genSubtraction],
+    weights:    [0.25,             0.30,                0.25,        0.20]
+  },
+  { // Level 3
+    division: "Division 3",
+    generators: [genAdditionCarrying, genSubtraction, genMissingNumber, genBondTo20],
+    weights:    [0.20,                0.30,            0.25,             0.25]
+  },
+  { // Level 4
+    division: "Division 2",
+    generators: [genAddTo100, genSubTo100, genAdditionCarrying, genMissingNumber, genSubtraction],
+    weights:    [0.30,        0.25,         0.15,                0.15,             0.15]
+  },
+  { // Level 5
+    division: "Division 1",
+    generators: [genAddTo100, genSubTo100, genMissingNumberTo100, genMultiplication],
+    weights:    [0.30,        0.30,         0.20,                  0.20]
+  },
+  { // Level 6
+    division: "Premier League",
+    generators: [genAddTo100, genSubTo100, genMultiplication, genMissingNumberTo100],
+    weights:    [0.20,        0.20,         0.35,               0.25]
+  }
+];
+
+const MAX_LEVEL = LEVELS.length;
+const PROMO_SCORE = 18; // score needed to go up a division
+const RELEGATION_SCORE = 9; // score below which you drop a division
+
+function getLevel() {
+  const stored = parseInt(localStorage.getItem('barney_maths_level'));
+  if (!stored || stored < 1 || stored > MAX_LEVEL) return 1;
+  return stored;
+}
+
+function setLevel(level) {
+  const clamped = Math.max(1, Math.min(MAX_LEVEL, level));
+  localStorage.setItem('barney_maths_level', clamped);
+  return clamped;
+}
+
+let currentLevel = getLevel();
+
+function pickGenerator() {
+  const config = LEVELS[currentLevel - 1];
+  const r = Math.random();
+  let cumulative = 0;
+  for (let i = 0; i < config.generators.length; i++) {
+    cumulative += config.weights[i];
+    if (r <= cumulative) return config.generators[i];
+  }
+  return config.generators[0];
+}
+
+function buildQuestionSet() {
+  const qs = [];
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const gen = pickGenerator();
+    const q = gen();
+    q.options = makeOptions(q.answer, q.min, q.max);
+    qs.push(q);
+  }
+  return qs;
+}
+
+// ---- UI ----
+function startGame() {
+  currentQ = 0;
+  score = 0;
+  streak = 0;
+  currentLevel = getLevel();
+  document.getElementById('division-label').textContent = LEVELS[currentLevel - 1].division;
+  questions = buildQuestionSet();
+  document.getElementById('game-screen').style.display = 'block';
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('promo-banner-wrap').innerHTML = '';
+  renderStars();
+  showQuestion();
+}
+
+function renderStars() {
+  const row = document.getElementById('stars-row');
+  row.innerHTML = '';
+  for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+    const s = document.createElement('span');
+    s.className = 'star';
+    s.textContent = '⭐';
+    if (i < score) s.classList.add('lit');
+    row.appendChild(s);
+  }
+}
+
+function showQuestion() {
+  answered = false;
+  const q = questions[currentQ];
+  document.getElementById('q-sum').innerHTML = q.raw ? q.text : `${q.text}<span class="blank">?</span>`;
+  document.getElementById('pitch-label').textContent = `Question ${currentQ + 1} of ${TOTAL_QUESTIONS}`;
+
+  const pct = (currentQ / TOTAL_QUESTIONS) * 100;
+  document.getElementById('pitch-fill').style.width = pct + '%';
+  document.getElementById('pitch-ball').style.left = `calc(${pct}% - 4px)`;
+
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(opt, q.answer, btn);
+    grid.appendChild(btn);
+  });
+}
+
+function selectAnswer(chosen, correct, btn) {
+  if (answered) return;
+  answered = true;
+  const allBtns = document.querySelectorAll('.opt-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const isCorrect = chosen === correct;
+  if (isCorrect) {
+    score++;
+    streak++;
+    btn.classList.add('correct');
+    showFeedback(streak >= 3 ? '🔥' : '⚽');
+  } else {
+    streak = 0;
+    btn.classList.add('wrong');
+    allBtns.forEach(b => {
+      if (parseInt(b.textContent) === correct) b.classList.add('correct');
+    });
+    showFeedback('🧤');
+  }
+  renderStars();
+
+  const pct = ((currentQ + 1) / TOTAL_QUESTIONS) * 100;
+  document.getElementById('pitch-fill').style.width = pct + '%';
+  document.getElementById('pitch-ball').style.left = `calc(${pct}% - 4px)`;
+
+  setTimeout(() => {
+    currentQ++;
+    if (currentQ >= TOTAL_QUESTIONS) {
+      showEnd();
+    } else {
+      showQuestion();
+    }
+  }, 1100);
+}
+
+function showFeedback(emoji) {
+  const fb = document.getElementById('feedback');
+  const fbEmoji = document.getElementById('feedback-emoji');
+  fbEmoji.textContent = emoji;
+  fbEmoji.style.animation = 'none';
+  void fbEmoji.offsetWidth; // restart animation
+  fbEmoji.style.animation = '';
+  fb.classList.add('show');
+  setTimeout(() => fb.classList.remove('show'), 700);
+}
+
+function showConfetti() {
+  const colors = ['#dc2626', '#fbbf24', '#22c55e', '#ffffff', '#1d4ed8'];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
+    c.style.animationDelay = (Math.random() * 0.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3500);
+  }
+}
+
+function getStats() {
+  try {
+    return JSON.parse(localStorage.getItem('barney_maths_stats')) || { best: null, played: 0, perfect: 0 };
+  } catch (e) {
+    return { best: null, played: 0, perfect: 0 };
+  }
+}
+
+function updateStats(score) {
+  const stats = getStats();
+  stats.played = (stats.played || 0) + 1;
+  if (stats.best === null || score > stats.best) stats.best = score;
+  if (score === TOTAL_QUESTIONS) stats.perfect = (stats.perfect || 0) + 1;
+  localStorage.setItem('barney_maths_stats', JSON.stringify(stats));
+}
+
+function showEnd() {
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'block';
+  document.getElementById('final-score').textContent = score;
+
+  const pct = score / TOTAL_QUESTIONS;
+  let trophy, title, msg, starCount;
+  if (pct === 1) {
+    trophy = '🏆'; title = 'PERFECT MATCH!'; starCount = 3;
+    msg = "20 out of 20 — you're unstoppable, Barney! ⚽🔥";
+    showConfetti();
+  } else if (pct >= 0.85) {
+    trophy = '🥇'; title = 'MAN OF THE MATCH!'; starCount = 3;
+    msg = "Brilliant performance! Almost a clean sheet!";
+    showConfetti();
+  } else if (pct >= 0.7) {
+    trophy = '🥈'; title = 'GREAT GAME!'; starCount = 2;
+    msg = "Really strong work — keep that up!";
+  } else if (pct >= 0.5) {
+    trophy = '🥉'; title = 'GOOD EFFORT!'; starCount = 1;
+    msg = "Solid game! A bit more training and you'll be flying.";
+  } else {
+    trophy = '💪'; title = 'KEEP TRAINING!'; starCount = 0;
+    msg = "Every player needs practice — let's go again!";
+  }
+
+  document.getElementById('end-trophy').textContent = trophy;
+  document.getElementById('end-title').textContent = title;
+  document.getElementById('end-msg').textContent = msg;
+
+  const starsRow = document.getElementById('end-stars-row');
+  starsRow.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const s = document.createElement('span');
+    s.textContent = i < starCount ? '⭐' : '☆';
+    s.style.opacity = i < starCount ? '1' : '0.25';
+    starsRow.appendChild(s);
+  }
+
+  // Update stats
+  updateStats(score);
+
+  // Promotion / relegation logic
+  const oldLevel = currentLevel;
+  let newLevel = oldLevel;
+  let banner = '';
+  if (score >= PROMO_SCORE && oldLevel < MAX_LEVEL) {
+    newLevel = setLevel(oldLevel + 1);
+    const newDiv = LEVELS[newLevel - 1].division;
+    banner = `<div class="promo-banner up">⬆️ PROMOTED! ⬆️<div class="sub">You're moving up to ${newDiv}!</div></div>`;
+  } else if (score <= RELEGATION_SCORE && oldLevel > 1) {
+    newLevel = setLevel(oldLevel - 1);
+    const newDiv = LEVELS[newLevel - 1].division;
+    banner = `<div class="promo-banner down">⚠️ Time for more training ⚠️<div class="sub">Dropping back to ${newDiv} to build confidence</div></div>`;
+  } else if (oldLevel === MAX_LEVEL && score >= PROMO_SCORE) {
+    banner = `<div class="promo-banner up">🌟 PREMIER LEAGUE CHAMPION! 🌟<div class="sub">You're at the very top, Barney!</div></div>`;
+  } else {
+    setLevel(oldLevel); // no change, but ensure stored
+  }
+  document.getElementById('promo-banner-wrap').innerHTML = banner;
+}
+
+startGame();
+</script>
+</body>
+</html>

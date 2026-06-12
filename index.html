@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barney's Training Ground ⚽</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800;900&display=swap');
+  :root{
+    --bg:#0d6e3e; --pitch:#0f8a4a; --red:#dc2626; --red-dark:#991b1b;
+    --white:#ffffff; --text:#1a1a1a; --gold:#fbbf24; --green:#22c55e;
+    --radius:24px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:linear-gradient(180deg,var(--pitch) 0%,var(--bg) 100%);
+    background-image:repeating-linear-gradient(90deg, transparent 0 80px, #ffffff08 80px 160px);
+    min-height:100vh;color:var(--text);
+  }
+
+  /* HERO */
+  .hero{padding:30px 20px 20px;text-align:center;}
+  .hero .ball-spin{font-size:3.5rem;display:inline-block;animation:spin 6s linear infinite;margin-bottom:6px;}
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:2.2rem;color:#fff;text-shadow:0 3px 6px #00000030;margin-bottom:6px;}
+  .hero p{font-size:1rem;color:#ffffffcc;font-weight:700;}
+
+  /* DIVISION CARD */
+  .division-card{margin:16px;background:#ffffff18;border:2px solid #ffffff35;border-radius:18px;padding:16px 20px;text-align:center;}
+  .division-card .tag{font-family:'Nunito',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#ffffffaa;margin-bottom:4px;}
+  .division-card .name{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.5rem;color:#fff;text-shadow:0 2px 4px #00000030;}
+  .division-card .ladder{display:flex;justify-content:center;gap:6px;margin-top:12px;}
+  .ladder-dot{width:14px;height:14px;border-radius:50%;background:#ffffff25;border:2px solid #ffffff40;}
+  .ladder-dot.filled{background:var(--gold);border-color:#fbbf24;}
+  .ladder-dot.current{background:var(--white);border-color:var(--white);box-shadow:0 0 0 4px #ffffff30;}
+
+  /* MAIN PLAY BUTTON */
+  .play-section{padding:8px 16px 20px;}
+  .play-card{
+    display:block; text-decoration:none; background:linear-gradient(135deg,var(--red),var(--red-dark));
+    border-radius:var(--radius); padding:28px 24px; text-align:center;
+    box-shadow:0 8px 24px #00000035; border:3px solid #ffffff30;
+    transition:all 0.15s;
+  }
+  .play-card:active{transform:scale(0.98);}
+  .play-card .icon{font-size:3.5rem;margin-bottom:8px;display:block;}
+  .play-card .title{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.8rem;color:#fff;text-shadow:0 2px 4px #00000030;}
+  .play-card .sub{font-size:0.95rem;color:#ffffffdd;font-weight:700;margin-top:4px;}
+
+  /* STATS ROW */
+  .stats-row{display:flex;gap:10px;padding:0 16px 20px;}
+  .stat-card{flex:1;background:#ffffff15;border:2px solid #ffffff30;border-radius:16px;padding:14px 10px;text-align:center;}
+  .stat-card .num{font-family:'Baloo 2',cursive;font-weight:800;font-size:1.8rem;color:#fff;}
+  .stat-card .label{font-size:0.7rem;font-weight:800;color:#ffffffaa;text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+
+  /* COMING SOON */
+  .section-label{font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#ffffff99;margin:8px 16px 10px;text-align:center;}
+  .coming-soon{margin:0 16px 30px;background:#ffffff10;border:2px dashed #ffffff30;border-radius:18px;padding:20px;text-align:center;}
+  .coming-soon .icon{font-size:2rem;margin-bottom:6px;}
+  .coming-soon .title{font-family:'Baloo 2',cursive;font-weight:800;color:#ffffffcc;font-size:1.1rem;}
+  .coming-soon .sub{font-size:0.85rem;color:#ffffff80;font-weight:700;margin-top:4px;}
+
+  /* MASCOT FOOTER */
+  .footer{text-align:center;padding:10px 16px 36px;color:#ffffff60;font-size:0.8rem;font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="ball-spin">⚽</span>
+  <h1>Barney's Training Ground</h1>
+  <p>Get ready for Match Day!</p>
+</div>
+
+<div class="division-card">
+  <div class="tag">Current Division</div>
+  <div class="name" id="division-name">Division 5</div>
+  <div class="ladder" id="ladder"></div>
+</div>
+
+<div class="play-section">
+  <a href="maths.html" class="play-card">
+    <span class="icon">🥅</span>
+    <div class="title">Start Training!</div>
+    <div class="sub">20 questions · Maths Match Day</div>
+  </a>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="num" id="stat-best">-</div>
+    <div class="label">Best Score</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" id="stat-played">0</div>
+    <div class="label">Matches Played</div>
+  </div>
+  <div class="stat-card">
+    <div class="num" id="stat-perfect">0</div>
+    <div class="label">Perfect Games</div>
+  </div>
+</div>
+
+<div class="section-label">Coming Soon</div>
+<div class="coming-soon">
+  <div class="icon">📖</div>
+  <div class="title">Reading Practice</div>
+  <div class="sub">More training drills on the way!</div>
+</div>
+
+<div class="footer">⚽ Train hard, play harder ⚽</div>
+
+<script>
+const LEVELS = [
+  "Division 5", "Division 4", "Division 3", "Division 2", "Division 1", "Premier League"
+];
+
+function getLevel() {
+  const stored = parseInt(localStorage.getItem('barney_maths_level'));
+  if (!stored || stored < 1 || stored > LEVELS.length) return 1;
+  return stored;
+}
+
+function getStats() {
+  try {
+    return JSON.parse(localStorage.getItem('barney_maths_stats')) || { best: null, played: 0, perfect: 0 };
+  } catch (e) {
+    return { best: null, played: 0, perfect: 0 };
+  }
+}
+
+const level = getLevel();
+document.getElementById('division-name').textContent = LEVELS[level - 1];
+
+const ladder = document.getElementById('ladder');
+ladder.innerHTML = '';
+for (let i = 0; i < LEVELS.length; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'ladder-dot';
+  if (i < level - 1) dot.classList.add('filled');
+  if (i === level - 1) dot.classList.add('current');
+  ladder.appendChild(dot);
+}
+
+const stats = getStats();
+document.getElementById('stat-best').textContent = stats.best !== null ? `${stats.best}/20` : '-';
+document.getElementById('stat-played').textContent = stats.played;
+document.getElementById('stat-perfect').textContent = stats.perfect;
+</script>
+</body>
+</html>
